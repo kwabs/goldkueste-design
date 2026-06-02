@@ -90,7 +90,7 @@
   /* NAV */
   nav {
     position: fixed; top: 0; left: 0; right: 0;
-    z-index: 100;
+    z-index: 500;
     padding: 1.5rem 4rem;
     display: flex;
     align-items: center;
@@ -148,7 +148,7 @@
     border: none;
     cursor: pointer;
     padding: 0;
-    z-index: 200;
+    z-index: 400;
   }
   .nav-hamburger span {
     display: block;
@@ -168,7 +168,7 @@
     inset: 0;
     background: rgba(240,243,247,0.98);
     backdrop-filter: blur(12px);
-    z-index: 150;
+    z-index: 300;
     flex-direction: column;
     align-items: center;
     justify-content: center;
@@ -191,16 +191,27 @@
     transition: color 0.2s;
   }
   .mobile-menu a:hover { color: var(--gold); }
+  .mobile-close {
+    position: absolute;
+    top: 1.5rem; right: 1.5rem;
+    background: none; border: none;
+    font-size: 1.4rem; color: var(--text);
+    cursor: pointer; padding: 0.5rem;
+    line-height: 1;
+  }
   .mobile-menu .mobile-cta {
     font-family: var(--font-body);
-    font-size: 0.8rem;
+    font-size: 0.78rem;
     letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: var(--gold);
-    border: 1px solid rgba(201,168,76,0.4);
-    padding: 0.6rem 1.8rem;
+    color: var(--white);
+    background: var(--gold-display);
+    border-radius: 999px;
+    padding: 0.55rem 1.4rem;
     margin-top: 1rem;
+    transition: background 0.2s;
   }
+  .mobile-menu .mobile-cta:hover { background: var(--gold-light); color: var(--white); }
 
   /* HERO */
   /* HERO */
@@ -1171,7 +1182,7 @@
     .service-card { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.06); padding: 2rem 0; }
     .service-card:last-child { border-bottom: none; }
     .projects-grid { grid-template-columns: 1fr 1fr; }
-    .contact-inner { flex-direction: column; gap: 3rem; }
+    .contact-inner { grid-template-columns: 1fr; gap: 3rem; }
     .footer-inner { grid-template-columns: 1fr 1fr; gap: 2.5rem; }
     footer { padding: 3rem 2rem; }
   }
@@ -1231,6 +1242,7 @@
 
 <!-- MOBILE MENU -->
 <div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-close" id="mobileClose" aria-label="Menü schließen">✕</button>
   <a href="#about" class="mobile-link">About</a>
   <a href="#services" class="mobile-link">Services</a>
   <a href="#projects" class="mobile-link">Projekte</a>
@@ -1621,6 +1633,11 @@
     hamburger.classList.toggle('open');
     mobileMenu.classList.toggle('open');
     document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+  });
+  document.getElementById('mobileClose').addEventListener('click', () => {
+    hamburger.classList.remove('open');
+    mobileMenu.classList.remove('open');
+    document.body.style.overflow = '';
   });
   document.querySelectorAll('.mobile-link').forEach(link => {
     link.addEventListener('click', () => {
